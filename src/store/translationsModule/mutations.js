@@ -10,10 +10,26 @@ export function SET_TRANSLATE(state, value) {
         items.key = items.key.replace(/cms/, "layout")
       }
     }
+    const qbase = items.key.includes('::') ? items.key.split('::')[0] : items.key.split('.')[0]
+    const name = items.key.includes('::') ? items.key.split('::')[1] : items.key.split('.')[1]
+    const isImage = name.includes("external image url") ? items.value : ''
     return {
-      key: items.key,
-      en: items.en ? items.en.value : 'no translation yet' ,
-      es: items.es ? items.es.value : 'no hay traducción aún'
+      en: {
+        [qbase]: {
+          [name]: {
+            title: items.en ? items.en.value : items.value,
+            image: isImage
+          }
+        }
+      },
+      es: {
+        [qbase]: {
+          [name]: {
+            title: items.es ? items.es.value : items.value,
+            image: isImage
+          }
+        }
+      },
     }
   })
 }

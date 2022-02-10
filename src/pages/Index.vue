@@ -1,21 +1,27 @@
 <template>
   <div class="q-pa-md">
-    <q-table
-      title="Translations"
-      :rows="translations"
-      :columns="columns"
-      :filter="filter"
-      row-key="name"
-      binary-state-sort
-    >
-      <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
-    </q-table>
+    <q-circular-progress
+      v-if="loading"
+      indeterminate
+      size="50px"
+      color="lime"
+      class="q-ma-md"
+    />
+    <div v-else class="row">
+      <div class="col-6">
+        <h1>ES</h1>
+        <div v-for="(items, key) in es" :key="key" >
+          {{items}}
+        </div>
+      </div>
+      <div class="col-6">
+        <h1>EN</h1>
+        <div v-for="(items, key) in en" :key="key" >
+          {{items}}
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -25,40 +31,6 @@ import { mapActions, mapGetters } from "vuex";
 
 export default defineComponent({
   name: "PageIndex",
-  data() {
-    return {
-      filter:null,
-      colomns: [
-        {
-          name: 'name',
-          required: true,
-          label: 'key',
-          align: 'left',
-          field: row => row.name,
-          format: val => `${val}`,
-          sortable: true
-        },
-        {
-          name: 'name',
-          required: true,
-          label: 'en',
-          align: 'left',
-          field: row => row.name,
-          format: val => `${val}`,
-          sortable: true
-        },
-        {
-          name: 'name',
-          required: true,
-          label: 'es',
-          align: 'left',
-          field: row => row.name,
-          format: val => `${val}`,
-          sortable: true
-        },
-      ],
-    }
-  },
   async created() {
     const { data } = await this.$apireq.get("/translations")
     this.getTranslation(data)
@@ -66,6 +38,11 @@ export default defineComponent({
 
   computed :{
     ...mapGetters('translationsModule', ['translations']),
+    loading () {
+      return this.translations.length <= 0
+    },
+    en () { return this.translations.map(item => item.en)},
+    es () { return this.translations.map(item => item.es)}
   },
 
   methods: {
@@ -74,3 +51,9 @@ export default defineComponent({
 
 });
 </script>
+
+<style lang="scss" scoped>
+  .container {
+    padding: 0, 10%;
+  }
+</style>
