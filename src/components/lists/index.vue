@@ -1,22 +1,28 @@
 <template>
   <div class="q-pa-md">
     <q-list
+      dense
       bordered
-      class="rounded-borders"
+      class="rounded-borders q-mb-sm"
       v-for="(items, key) in format" :key="key"
     >
-      <app-card class="q-mb-sm" :qname="items">
-        <q-list
-          bordered
-          class="rounded-borders"
-          v-for="(item, key) in getArray(items[getLabelqName(items)])" :key="key"
-        >
-          <app-card :primary="false" :qname="item">
-            <div class="text-subtitle2 q-pt-md q-pl-xl q-mb-sm">title: {{ item[getLabelqName(item)].title}}</div>
-            <div class="text-subtitle2 q-pb-md q-pl-xl">image uri: {{ item[getLabelqName(item)].image}}</div>
+      <q-item clickable>
+        <q-item-section>
+          <app-card class="q-mb-sm" :qname="items">
+            <q-list
+              bordered
+              class="rounded-borders"
+              v-for="(item, key) in getArray(items[getLabelqName(items)])" :key="key"
+            >
+              <app-card :primary="false" :qname="item">
+                <div class="text-subtitle2 q-pt-md q-pl-xl q-mb-sm">title: {{ item[getLabelqName(item)].title}}</div>
+                <div class="text-subtitle2 q-pb-md q-pl-xl">image uri: {{ item[getLabelqName(item)].image}}</div>
+              </app-card>
+            </q-list>
           </app-card>
-        </q-list>
-      </app-card>
+        </q-item-section>
+      </q-item>
+
     </q-list>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card >
+    <q-card flat>
       <q-card-section @click="open">
         <div :class="`text-subtitle2 ${primary ? '' : 'q-ml-md'}`">{{ getLabelqName(qname) }}</div>
       </q-card-section>
