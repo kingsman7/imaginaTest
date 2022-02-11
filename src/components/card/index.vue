@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-card class="my-card">
+    <q-card >
       <q-card-section @click="open">
-        <div class="text-subtitle2">{{ getLabelqName(qname) }}</div>
+        <div :class="`text-subtitle2 ${primary ? '' : 'q-ml-md'}`">{{ getLabelqName(qname) }}</div>
       </q-card-section>
     </q-card>
     <div v-if="!!edit">
@@ -18,6 +18,10 @@ import nameMixins from "src/mixins/getLabelName"
 export default defineComponent({
   props: {
     qname: {},
+    primary: {
+      type: Boolean,
+      default: true
+    }
   },
   mixins: [ nameMixins ],
   name: "appCard",
