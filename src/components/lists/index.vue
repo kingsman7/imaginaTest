@@ -54,14 +54,6 @@ export default defineComponent({
     }
   },
   methods: {
-    getLabelName (obj) {
-      if (!obj) return;
-      return `${Object.entries(Object.entries(obj)[0][1])[0][0]}`
-    },
-    getValue (obj) {
-      if (!obj) return;
-      return Object.entries(Object.entries(obj)[0][1])[0][1]
-    },
     getArray (obj) {
       if (!obj) return [];
       const arr = []
