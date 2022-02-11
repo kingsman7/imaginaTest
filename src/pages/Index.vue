@@ -10,15 +10,11 @@
     <div v-else class="row">
       <div class="col-6">
         <h1>ES</h1>
-        <div v-for="(items, key) in es" :key="key" >
-          {{items}}
-        </div>
+        <app-list :lang="es"  />
       </div>
       <div class="col-6">
         <h1>EN</h1>
-        <div v-for="(items, key) in en" :key="key" >
-          {{items}}
-        </div>
+        <app-list :lang="en"  />
       </div>
     </div>
 
@@ -28,16 +24,20 @@
 <script>
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
+import appList from "components/lists"
 
 export default defineComponent({
   name: "PageIndex",
+
+  components: { appList },
+
   async created() {
     const { data } = await this.$apireq.get("/translations")
     this.getTranslation(data)
   },
 
   computed :{
-    ...mapGetters('translationsModule', ['translations']),
+    ...mapGetters('translationsModule', ['translations', 'langReduce']),
     loading () {
       return this.translations.length <= 0
     },
@@ -46,7 +46,7 @@ export default defineComponent({
   },
 
   methods: {
-    ...mapActions('translationsModule', ['getTranslation']),
+    ...mapActions('translationsModule', ['getTranslation', 'triggerReduce']),
   }
 
 });
